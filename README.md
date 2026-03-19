@@ -1,25 +1,18 @@
-# Soccer Chess Game Logic
+# Soccer Chess
 
-Pure game-logic module with no UI dependencies.
+Planning documents for a web-first online multiplayer soccer-chess game.
 
-## API
+## Included docs
 
-- `createInitialState(variantName?)`
-- `getLegalMoves(state)`
-- `applyMove(state, move)`
-- `getGameStatus(state)`
+- `docs/week-1-backlog.md`: a day-by-day execution plan for the first week of V1 development.
+- `docs/starter-folder-structure-and-message-schema.md`: a starter monorepo layout plus shared WebSocket message contracts.
 
-## Variant support
+## Recommended V1 platform
 
-Built-in variants:
+- **Client:** Next.js + React + TypeScript
+- **Game server:** Node.js + TypeScript + WebSockets
+- **Database:** Postgres
+- **Ephemeral state / queueing:** Redis
+- **Shared packages:** game rules, message types, and configuration
 
-- `standard`: first goal wins, draw after 100 plies without a goal.
-- `extended`: first to 2 goals wins, draw after 150 plies without a goal.
-
-## Move types
-
-`getLegalMoves` returns move objects:
-
-- Piece movement: `{ type: 'move', pieceId, from, to, capturedPieceId? }`
-- Ball pass: `{ type: 'pass', pieceId, from, to, targetPieceId }`
-- Shot: `{ type: 'shot', pieceId, from, to }`
+This setup is optimized for browser-based play, fast iteration, and authoritative real-time multiplayer.
