@@ -460,7 +460,34 @@ async function handleMoveIntent(event: Extract<ClientToServerEvent, { type: 'mat
   }
 
   const next = applyMove(state, intent);
-  await matchService.saveState(matchId, next);
+  const saved = await matchService.saveStateIfVersionMatches({
+    matchId,
+    expectedStateVersion: state.stateVersion,
+    nextState: next,
+  });
+
+  if (!saved.ok) {
+    const latestState = saved.currentState ?? (await matchService.getState(matchId));
+
+    emit({
+      type: 'match/move-rejected',
+      payload: {
+        matchId,
+        stateVersion: latestState.stateVersion,
+        code: 'STATE_VERSION_MISMATCH',
+        message: 'State changed before your move was persisted. Requesting resync.',
+      },
+    });
+
+    return emit({
+      type: 'match/resync-state',
+      payload: {
+        matchId,
+        gameState: latestState,
+        reason: 'version-mismatch',
+      },
+    });
+  }
 
   broadcastToMatch(matchId, {
     type: 'match/move-accepted',
@@ -474,6 +501,11 @@ async function handleMoveIntent(event: Extract<ClientToServerEvent, { type: 'mat
     },
   });
 }
+
+// NOTE: `saveStateIfVersionMatches` must perform a compare-and-swap against the
+// version that was read above. Without that conditional write, two concurrent
+// handlers can both validate the same snapshot and incorrectly accept/broadcast
+// duplicate moves for a single turn.
 ```
 
 ---
