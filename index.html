@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Soccer Chess</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <h1>Soccer Chess</h1>
+
+      <section class="pregame" id="pregame-panel">
+        <h2>Pre-game Setup</h2>
+        <label for="profile-selector">Rule profile</label>
+        <select id="profile-selector"></select>
+        <p id="profile-description" class="description"></p>
+        <ul id="profile-highlights" class="highlights"></ul>
+        <button id="start-game" type="button">Start match</button>
+      </section>
+
+      <section class="match" id="match-panel" hidden>
+        <h2 id="match-title"></h2>
+        <p id="kickoff-state"></p>
+        <p id="pass-shot"></p>
+        <p id="movement"></p>
+        <p id="scoring"></p>
+        <button id="reset-game" type="button">Back to profile selection</button>
+      </section>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
