@@ -1,3 +1,6 @@
+# Soccer Chess
+
+This prototype adds a profile-driven rules configuration system and a pre-game selector.
 # Soccer Chess Rules Engine
 
 This repository contains a lightweight rules engine and focused automated tests for a soccer-chess hybrid.
@@ -5,6 +8,10 @@ This repository contains a lightweight rules engine and focused automated tests 
 ## Run locally
 
 ```bash
+python3 -m http.server 4173
+```
+
+Then visit <http://localhost:4173>.
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
