@@ -3,11 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Soccer Chess Board</title>
     <title>Soccer Chess</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="layout">
+      <section class="board-panel">
+        <header class="status-row">
+          <h1>Soccer Chess</h1>
+          <div id="turn-indicator" class="turn-indicator"></div>
+        </header>
+        <p id="feedback" class="feedback" aria-live="polite"></p>
+        <div id="board" class="board" role="grid" aria-label="Soccer chess board"></div>
+      </section>
+
+      <aside class="history-panel">
+        <h2>Move History</h2>
+        <ol id="move-history" class="move-history"></ol>
+      </aside>
+    </main>
+
+    <script type="module" src="app.js"></script>
       <h1>Soccer Chess</h1>
 
       <section class="pregame" id="pregame-panel">
