@@ -7,5 +7,9 @@
     "dev": "node scripts/dev.mjs",
     "build": "node scripts/build.mjs",
     "preview": "node scripts/dev.mjs dist"
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test"
   }
 }
