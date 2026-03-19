@@ -42,6 +42,27 @@ test('capturing ball holder transfers possession', () => {
   assert.equal(next.ball.holderPieceId, 'black-rook');
 });
 
+test('applyMove accepts equivalent non-capturing moves with reordered keys and omitted capturedPieceId', () => {
+  const state = {
+    ...createInitialState(),
+    pieces: [
+      { id: 'white-rook', type: 'rook', team: 'white', position: 'a1' },
+      { id: 'white-king-1', type: 'king', team: 'white', position: 'e1' },
+      { id: 'black-king-1', type: 'king', team: 'black', position: 'h8' },
+    ],
+    ball: { holderPieceId: 'white-king-1', lastTouchedBy: 'white', goals: { white: 0, black: 0 } },
+    turn: 'white',
+    plyCountWithoutGoal: 0,
+    moveNumber: 1,
+    history: [],
+  };
+
+  const move = { to: 'a4', from: 'a1', pieceId: 'white-rook', type: 'move' };
+  const next = applyMove(state, move);
+  const rook = next.pieces.find((p) => p.id === 'white-rook');
+  assert.equal(rook.position, 'a4');
+});
+
 test('shot updates score and can end game', () => {
   const state = {
     ...createInitialState(),

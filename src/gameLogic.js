@@ -315,10 +315,26 @@ function moveAction(piece, to, capturedPieceId = null) {
   };
 }
 
+function movesEqual(candidate, move) {
+  if (!candidate || !move || candidate.type !== move.type) return false;
+  if (candidate.pieceId !== move.pieceId || candidate.from !== move.from || candidate.to !== move.to) {
+    return false;
+  }
+
+  if (candidate.type === 'move') {
+    return (candidate.capturedPieceId ?? null) === (move.capturedPieceId ?? null);
+  }
+
+  if (candidate.type === 'pass') {
+    return candidate.targetPieceId === move.targetPieceId;
+  }
+
+  return candidate.type === 'shot';
+}
+
 function applyMove(state, move) {
   const legal = getLegalMoves(state);
-  const encoded = JSON.stringify(move);
-  if (!legal.some((candidate) => JSON.stringify(candidate) === encoded)) {
+  if (!legal.some((candidate) => movesEqual(candidate, move))) {
     throw new Error('Illegal move');
   }
 
